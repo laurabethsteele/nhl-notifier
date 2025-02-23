@@ -66,12 +66,12 @@ class NHLGame:
 
 class Team:
     def __init__(self, team_name, team_score, league="nhl"):
-        self.team_name = CBJ
+        self.team_name = cbj
         self.league = league
         if len(team_name) <= 3:
-            self.CBJ = team_name
+            self.cbj = team_name
         else:
-            self.CBJ = NHLTeams.team_dict[team_name]
+            self.cbj = NHLTeams.team_dict[team_name]
         self.cbj = self.cbj.lower()
         self.__last_score = team_score
         self.last_score = team_score
@@ -155,7 +155,7 @@ class NHLTeams:
                  "Bruins": "BOS",
                  "Sabres": "BUF",
                  "Hurricanes": "CAR",
-                 "Blue Jackets": "CBJ",
+                 "Blue Jackets": "cbj",
                  "Flames": "CGY",
                  "Blackhawks": "CHI",
                  "Avalanche": "COL",
