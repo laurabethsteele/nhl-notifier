@@ -20,7 +20,7 @@ MAX_DELAY = 600
 MIN_DELAY = 20
 
 NHL = True
-ECHL = True
+ECHL = False
 
 private_file.close()
 
@@ -43,8 +43,8 @@ class ECHLGame:
 
 class NHLGame:
     def __init__(self, home, away, home_score, away_score, game_date):
-        self.home = Team(home, home_score)
-        self.away = Team(away, away_score)
+        self.home = CBJ(home, home_score)
+        self.away = CBJ(away, away_score)
         self.game_date = game_date
         self.game_status = None
 
