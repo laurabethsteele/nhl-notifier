@@ -43,13 +43,13 @@ class ECHLGame:
 
 class NHLGame:
     def __init__(self, home, away, home_score, away_score, game_date):
-        self.home = CBJ(home, home_score)
-        self.away = CBJ(away, away_score)
+        self.home = Team(home, home_score)
+        self.away = Team(away, away_score)
         self.game_date = game_date
         self.game_status = None
 
     def __str__(self):
-        return f"{self.home.team_name} ({self.home.team_abbr}) {'PP' if self.home.in_power_play else ''} vs {self.away.team_name} ({self.away.team_abbr}) {'PP' if self.away.in_power_play else ''} - {self.game_status}, {self.home.last_score}-{self.away.last_score}"
+        return f"{self.home.team_name} ({self.home.cbj}) {'PP' if self.home.in_power_play else ''} vs {self.away.team_name} ({self.away.cbj}) {'PP' if self.away.in_power_play else ''} - {self.game_status}, {self.home.last_score}-{self.away.last_score}"
 
     def time_delay(self):
         if self.game_status == 'LIVE':
@@ -66,13 +66,13 @@ class NHLGame:
 
 class Team:
     def __init__(self, team_name, team_score, league="nhl"):
-        self.team_name = team_name
+        self.team_name = CBJ
         self.league = league
         if len(team_name) <= 3:
-            self.team_abbr = team_name
+            self.CBJ = team_name
         else:
-            self.team_abbr = NHLTeams.team_dict[team_name]
-        self.team_abbr_lower = self.team_abbr.lower()
+            self.CBJ = NHLTeams.team_dict[team_name]
+        self.cbj = self.cbj.lower()
         self.__last_score = team_score
         self.last_score = team_score
         self.__in_power_play = False
@@ -119,13 +119,13 @@ class Team:
 
     def notify_of_score(self):
         print(self.last_score)
-        print('SCORE', self.team_abbr)
+        print('SCORE', self.cbj)
         print(vars(self))
         preamble = ""
         if self.league != 'nhl':
             preamble = self.league+"_"
         notification = ('https://maker.ifttt.com/trigger/'
-                        '{preamble}{team}_score/with/key/{ifttt}'.format(team=self.team_abbr_lower,
+                        '{preamble}{team}_score/with/key/{ifttt}'.format(team=self.cbj_lower,
                                                                          ifttt=IFTTT_KEY,
                                                                          preamble=preamble))
         print('Sending', notification)
@@ -136,12 +136,12 @@ class Team:
             pass
 
     def notify_of_power_play(self):
-        print('PP', self.team_abbr)
+        print('PP', self.cbj)
         preamble = ""
         if self.league != 'nhl':
             preamble = self.league + "_"
         notification = ('https://maker.ifttt.com/trigger/'
-                        '{preamble}{team}_power_play/with/key/{ifttt}'.format(team=self.team_abbr_lower,
+                        '{preamble}{team}_power_play/with/key/{ifttt}'.format(team=self.cbj_lower,
                                                                               ifttt=IFTTT_KEY,
                                                                               preamble=preamble))
         print('Sending', notification)
